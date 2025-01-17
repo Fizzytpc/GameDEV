@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .input-group label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section" id="exposSection">
+            <h2>Expos Management</h2>
+            <button class="btn" onclick="loadExpos()">Load Expos</button>
+            <div id="exposList"></div>
+            <h3>Create Expo</h3>
+            <div>
+                <input type="text" id="expoTitle" placeholder="Title">
+                <input type="text" id="expoLocation" placeholder="Location">
+                <input type="text" id="expoMoment" placeholder="Moment">
+                <input type="text" id="expoCohort" placeholder="Cohort">
+                <button class="btn" onclick="createExpo()">Create Expo</button>
+            </div>
+        </div>
+
+        <div class="section" id="studentsSection">
+            <h2>Students Management</h2>
+            <button class="btn" onclick="loadStudents()">Load Students</button>
+            <div id="studentsList"></div>
+            <h3>Create Student</h3>
+            <div>
+                <input type="text" id="studentFullName" placeholder="Full Name">
+                <input type="email" id="studentEmail" placeholder="Email">
+                <input type="text" id="studentCohort" placeholder="Cohort">
+                <input type="number" id="studentDuoNumber" placeholder="Duo Number">
+                <button class="btn" onclick="createStudent()">Create Student</button>
+            </div>
+        </div>
+
+        <div class="section" id="projectsSection">
+            <h2>Projects Management</h2>
+            <button class="btn" onclick="loadProjects()">Load Projects</button>
+            <div id="projectsList"></div>
+            <h3>Create Project</h3>
+            <div>
+                <input type="text" id="projectTitle" placeholder="Project Title">
+                <input type="text" id="projectSubscription" placeholder="Subscription">
+                <input type="text" id="projectImageURL" placeholder="Image URL">
+                <input type="number" id="projectExpoId" placeholder="Expo ID">
+                <button class="btn" onclick="createProject()">Create Project</button>
+            </div>
+        </div>
+
+        <div class="section" id="studentProjectsSection">
+            <h2>Student Projects Management</h2>
+            <button class="btn" onclick="loadStudentProjects()">Load Student Projects</button>
+            <div id="studentProjectsList"></div>
+            <h3>Assign Project to Student</h3>
+            <div>
+                <input type="number" id="studentId" placeholder="Student ID">
+                <input type="number" id="projectId" placeholder="Project ID">
+                <button class="btn" onclick="assignStudentToProject()">Assign Student to Project</button>
+            </div>
+        </div>
+
+        <div class="section" id="codeSection">
+            <h2>Generate and Verify Codes</h2>
+            <div>
+                <input type="email" id="verifyEmail" placeholder="Email">
+                <input type="text" id="verificationCode" placeholder="Code">
+                <button class="btn" onclick="generateCode()">Generate Code</button>
+                <button class="btn" onclick="verifyCode()">Verify Code</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = "https://apiexpo-production.up.railway.app/";
+
+        // Fetch Data
+        async function fetchData(endpoint, method = 'GET', body = null) {
+            const options = {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+            };
+            if (body) options.body = JSON.stringify(body);
+            const response = await fetch(apiUrl + endpoint, options);
+            return response.json();
+        }
+
+        // Manage Expos
+        function loadExpos() {
+            fetchData('/expos')
+                .then(expos => {
+                    const exposList = document.getElementById('exposList');
+                    exposList.innerHTML = '';
+                    expos.forEach(expo => {
+                        exposList.innerHTML += `<div>${expo.title} - ${expo.location}</div>`;
+                    });
+                });
+        }
+
+        function createExpo() {
+            const expo = {
+                title: document.getElementById('expoTitle').value,
+                location: document.getElementById('expoLocation').value,
+                moment: document.getElementById('expoMoment').value,
+                cohort: document.getElementById('expoCohort').value,
+            };
+            fetchData('/expos', 'POST', expo)
+                .then(response => {
+                    alert("Expo Created!");
+                    loadExpos();
+                });
+        }
+
+        // Manage Students
+        function loadStudents() {
+            fetchData('/students')
+                .then(students => {
+                    const studentsList = document.getElementById('studentsList');
+                    studentsList.innerHTML = '';
+                    students.forEach(student => {
+                        studentsList.innerHTML += `<div>${student.fullName} - ${student.email}</div>`;
+                    });
+                });
+        }
+
+        function createStudent() {
+            const student = {
+                fullName: document.getElementById('studentFullName').value,
+                email: document.getElementById('studentEmail').value,
+                cohort: document.getElementById('studentCohort').value,
+                duoNumber: document.getElementById('studentDuoNumber').value,
+            };
+            fetchData('/students', 'POST', student)
+                .then(response => {
+                    alert("Student Created!");
+                    loadStudents();
+                });
+        }
+
+        // Manage Projects
+        function loadProjects() {
+            fetchData('/projects')
+                .then(projects => {
+                    const projectsList = document.getElementById('projectsList');
+                    projectsList.innerHTML = '';
+                    projects.forEach(project => {
+                        projectsList.innerHTML += `<div>${project.title} - ${project.subscription}</div>`;
+                    });
+                });
+        }
+
+        function createProject() {
+            const project = {
+                title: document.getElementById('projectTitle').value,
+                subscription: document.getElementById('projectSubscription').value,
+                imageURL: document.getElementById('projectImageURL').value,
+                expoId: document.getElementById('projectExpoId').value,
+            };
+            fetchData('/projects', 'POST', project)
+                .then(response => {
+                    alert("Project Created!");
+                    loadProjects();
+                });
+        }
+
+        // Manage Student Projects
+        function loadStudentProjects() {
+            fetchData('/studentProjects')
+                .then(studentProjects => {
+                    const studentProjectsList = document.getElementById('studentProjectsList');
+                    studentProjectsList.innerHTML = '';
+                    studentProjects.forEach(sp => {
+                        studentProjectsList.innerHTML += `<div>Student ID: ${sp.studentId} - Project ID: ${sp.projectId}</div>`;
+                    });
+                });
+        }
+
+        function assignStudentToProject() {
+            const assignment = {
+                studentId: document.getElementById('studentId').value,
+                projectId: document.getElementById('projectId').value,
+            };
+            fetchData('/studentProjects', 'POST', assignment)
+                .then(response => {
+                    alert("Student Assigned to Project!");
+                    loadStudentProjects();
+                });
+        }
+
+        // Generate & Verify Codes
+        function generateCode() {
+            const email = document.getElementById('verifyEmail').value;
+            fetchData('/generateCode', 'POST', { email })
+                .then(response => {
+                    alert("Code Generated!");
+                });
+        }
+
+        function verifyCode() {
+            const email = document.getElementById('verifyEmail').value;
+            const code = document.getElementById('verificationCode').value;
+            fetchData('/verifyCode', 'POST', { email, code })
+                .then(response => {
+                    if (response.success) {
+                        alert("Code Verified!");
+                    } else {
+                        alert("Invalid Code!");
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
