@@ -9,17 +9,29 @@
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-7xl p-6 bg-white shadow-2xl rounded-lg">
         <!-- Tab Navigation -->
-        <div class="flex space-x-4 border-b pb-2 mb-6">
-            <button onclick="showTab('exposSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Expos</button>
-            <button onclick="showTab('studentsSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Students</button>
-            <button onclick="showTab('projectsSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Projects</button>
-            <button onclick="showTab('studentProjectsSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Student Projects</button>
-            <button onclick="showTab('codeSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Codes</button>
-        </div>
+    <div class="text-sm font-bold text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 ">
+     <ul class="flex flex-wrap -mb-px space-x-4">
+          <li class="me-2">
+             <a onclick="showTab('exposSection')" class="cursor-pointer inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page"><button>Expos</button></a>
+          </li>
+          <li class="me-2">
+              <a onclick="showTab('studentsSection')" class="cursor-pointer inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page"><button>Students</button></a>
+         </li>
+         <li class="me-2">
+             <a onclick="showTab('projectsSection')" class="cursor-pointer inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page"><button>Projects</button></a>
+         </li>
+            <li class="me-2">
+               <a onclick="showTab('studentProjectsSection')" class="cursor-pointer inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page"><button>Student Projects</button></a>
+            </li>
+            <li class="me-2">
+                <a onclick="showTab('codeSection')" class="cursor-pointer inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page"><button>Codes</button></a>
+         </li>
+        </ul>
+    </div>
 
         <!-- Sections -->
         <div id="exposSection" class="tab-content hidden">
-            <h2 class="text-xl font-semibold mb-4">Expos Management</h2>
+            <h2 class="text-xl font-semibold my-1.5 mb-4">Expos Management</h2>
             <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadExpos()"> Load Expos
             </button>
             <div id="exposList" class="mt-4"></div>
@@ -35,7 +47,7 @@
         </div>
 
         <div id="studentsSection" class="tab-content hidden">
-            <h2 class="text-xl font-semibold mb-4">Students Management</h2>
+            <h2 class="text-xl font-semibold my-1.5 mb-4">Students Management</h2>
             <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadStudents()">Load Students</button>
             <div id="studentsList" class="mt-4"></div>
 
@@ -50,7 +62,7 @@
         </div>
 
         <div id="projectsSection" class="tab-content hidden">
-            <h2 class="text-xl font-semibold mb-4">Projects Management</h2>
+            <h2 class="text-xl font-semibold mb-4 my-1.5">Projects Management</h2>
             <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadProjects()">Load Projects</button>
             <div id="projectsList" class="mt-4"></div>
 
@@ -65,7 +77,7 @@
         </div>
 
         <div id="studentProjectsSection" class="tab-content hidden">
-            <h2 class="text-xl font-semibold mb-4">Student Projects Management</h2>
+            <h2 class="text-xl font-semibold mb-4 my-1.5">Student Projects Management</h2>
             <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadStudentProjects()">Load Student Projects</button>
             <div id="studentProjectsList" class="mt-4"></div>
 
@@ -78,7 +90,7 @@
         </div>
 
         <div id="codeSection" class="tab-content hidden">
-            <h2 class="text-xl font-semibold mb-4">Generate and Verify Codes</h2>
+            <h2 class="text-xl font-semibold mb-4 my-1.5">Generate and Verify Codes</h2>
             <div class="space-y-4 mt-2">
                 <input id="verifyEmail" type="email" placeholder="Email" class="w-full p-2 border rounded">
                 <input id="verificationCode" type="text" placeholder="Code" class="w-full p-2 border rounded">
