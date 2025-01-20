@@ -4,183 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid #ccc;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            background-color: #f4f4f4;
-            border: 1px solid #ccc;
-            border-bottom: none;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .tab.active {
-            background-color: white;
-            font-weight: bold;
-            border-bottom: 2px solid white;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-        }
-
-        input[type="text"], input[type="email"], input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="exposSection">Expos</div>
-            <div class="tab" data-tab="studentsSection">Students</div>
-            <div class="tab" data-tab="projectsSection">Projects</div>
-            <div class="tab" data-tab="studentProjectsSection">Student Projects</div>
-            <div class="tab" data-tab="codeSection">Verification</div>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-7xl p-6 bg-white shadow-2xl rounded-lg">
+        <!-- Tab Navigation -->
+        <div class="flex space-x-4 border-b pb-2 mb-6">
+            <button onclick="showTab('exposSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Expos</button>
+            <button onclick="showTab('studentsSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Students</button>
+            <button onclick="showTab('projectsSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Projects</button>
+            <button onclick="showTab('studentProjectsSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Student Projects</button>
+            <button onclick="showTab('codeSection')" class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500 focus:outline-none border-b-2 border-transparent">Codes</button>
         </div>
 
-        <div class="section active" id="exposSection">
-            <h2>Expos Management</h2>
-            <button class="btn" onclick="loadExpos()">Load Expos</button>
-            <div id="exposList"></div>
-            <h3>Create Expo</h3>
-            <div>
-                <input type="text" id="expoTitle" placeholder="Title">
-                <input type="text" id="expoLocation" placeholder="Location">
-                <input type="text" id="expoMoment" placeholder="Moment">
-                <input type="text" id="expoCohort" placeholder="Cohort">
-                <button class="btn" onclick="createExpo()">Create Expo</button>
+        <!-- Sections -->
+        <div id="exposSection" class="tab-content hidden">
+            <h2 class="text-xl font-semibold mb-4">Expos Management</h2>
+            <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadExpos()"> Load Expos
+            </button>
+            <div id="exposList" class="mt-4"></div>
+
+            <h3 class="text-lg font-medium mt-6">Create Expo</h3>
+            <div class="space-y-4 mt-2">
+                <input id="expoTitle" type="text" placeholder="Title" class="w-full p-2 border rounded">
+                <input id="expoLocation" type="text" placeholder="Location" class="w-full p-2 border rounded">
+                <input id="expoMoment" type="text" placeholder="Moment" class="w-full p-2 border rounded">
+                <input id="expoCohort" type="text" placeholder="Cohort" class="w-full p-2 border rounded">
+                <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="createExpo()">Create Expo</button>
             </div>
         </div>
 
-        <div class="section" id="studentsSection">
-            <h2>Students Management</h2>
-            <button class="btn" onclick="loadStudents()">Load Students</button>
-            <div id="studentsList"></div>
-            <h3>Create Student</h3>
-            <div>
-                <input type="text" id="studentFullName" placeholder="Full Name">
-                <input type="email" id="studentEmail" placeholder="Email">
-                <input type="text" id="studentCohort" placeholder="Cohort">
-                <input type="number" id="studentDuoNumber" placeholder="Duo Number">
-                <button class="btn" onclick="createStudent()">Create Student</button>
+        <div id="studentsSection" class="tab-content hidden">
+            <h2 class="text-xl font-semibold mb-4">Students Management</h2>
+            <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadStudents()">Load Students</button>
+            <div id="studentsList" class="mt-4"></div>
+
+            <h3 class="text-lg font-medium mt-6">Create Student</h3>
+            <div class="space-y-4 mt-2">
+                <input id="studentFullName" type="text" placeholder="Full Name" class="w-full p-2 border rounded">
+                <input id="studentEmail" type="email" placeholder="Email" class="w-full p-2 border rounded">
+                <input id="studentCohort" type="text" placeholder="Cohort" class="w-full p-2 border rounded">
+                <input id="studentDuoNumber" type="number" placeholder="Duo Number" class="w-full p-2 border rounded">
+                <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="createStudent()">Create Student</button>
             </div>
         </div>
 
-        <div class="section" id="projectsSection">
-            <h2>Projects Management</h2>
-            <button class="btn" onclick="loadProjects()">Load Projects</button>
-            <div id="projectsList"></div>
-            <h3>Create Project</h3>
-            <div>
-                <input type="text" id="projectTitle" placeholder="Project Title">
-                <input type="text" id="projectSubscription" placeholder="Subscription">
-                <input type="text" id="projectImageURL" placeholder="Image URL">
-                <input type="number" id="projectExpoId" placeholder="Expo ID">
-                <button class="btn" onclick="createProject()">Create Project</button>
+        <div id="projectsSection" class="tab-content hidden">
+            <h2 class="text-xl font-semibold mb-4">Projects Management</h2>
+            <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadProjects()">Load Projects</button>
+            <div id="projectsList" class="mt-4"></div>
+
+            <h3 class="text-lg font-medium mt-6">Create Project</h3>
+            <div class="space-y-4 mt-2">
+                <input id="projectTitle" type="text" placeholder="Project Title" class="w-full p-2 border rounded">
+                <input id="projectSubscription" type="text" placeholder="Subscription" class="w-full p-2 border rounded">
+                <input id="projectImageURL" type="text" placeholder="Image URL" class="w-full p-2 border rounded">
+                <input id="projectExpoId" type="number" placeholder="Expo ID" class="w-full p-2 border rounded">
+                <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="createProject()">Create Project</button>
             </div>
         </div>
 
-        <div class="section" id="studentProjectsSection">
-            <h2>Student Projects Management</h2>
-            <button class="btn" onclick="loadStudentProjects()">Load Student Projects</button>
-            <div id="studentProjectsList"></div>
-            <h3>Assign Project to Student</h3>
-            <div>
-                <input type="number" id="studentId" placeholder="Student ID">
-                <input type="number" id="projectId" placeholder="Project ID">
-                <button class="btn" onclick="assignStudentToProject()">Assign Student to Project</button>
+        <div id="studentProjectsSection" class="tab-content hidden">
+            <h2 class="text-xl font-semibold mb-4">Student Projects Management</h2>
+            <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="loadStudentProjects()">Load Student Projects</button>
+            <div id="studentProjectsList" class="mt-4"></div>
+
+            <h3 class="text-lg font-medium mt-6">Assign Project to Student</h3>
+            <div class="space-y-4 mt-2">
+                <input id="studentId" type="number" placeholder="Student ID" class="w-full p-2 border rounded">
+                <input id="projectId" type="number" placeholder="Project ID" class="w-full p-2 border rounded">
+                <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="assignStudentToProject()">Assign Student to Project</button>
             </div>
         </div>
 
-        <div class="section" id="codeSection">
-            <h2>Generate and Verify Codes</h2>
-            <div>
-                <input type="email" id="verifyEmail" placeholder="Email">
-                <input type="text" id="verificationCode" placeholder="Code">
-                <button class="btn" onclick="generateCode()">Generate Code</button>
-                <button class="btn" onclick="verifyCode()">Verify Code</button>
+        <div id="codeSection" class="tab-content hidden">
+            <h2 class="text-xl font-semibold mb-4">Generate and Verify Codes</h2>
+            <div class="space-y-4 mt-2">
+                <input id="verifyEmail" type="email" placeholder="Email" class="w-full p-2 border rounded">
+                <input id="verificationCode" type="text" placeholder="Code" class="w-full p-2 border rounded">
+                <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="generateCode()">Generate Code</button>
+                <button class="py-2.5 px-5 me-2 mb-2 text-sm font-bold text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="verifyCode()">Verify Code</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Tab navigation
-        const tabs = document.querySelectorAll('.tab');
-        const sections = document.querySelectorAll('.section');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                sections.forEach(s => s.classList.remove('active'));
-
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.tab).classList.add('active');
-            });
-        });
-
-        // Example functions for API calls
         const apiUrl = "https://apiexpo-production.up.railway.app/";
+
+        function showTab(sectionId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
 
         async function fetchData(endpoint, method = 'GET', body = null) {
             const options = {
@@ -193,13 +107,14 @@
         }
 
         function loadExpos() {
-            fetchData('/expos').then(expos => {
-                const exposList = document.getElementById('exposList');
-                exposList.innerHTML = '';
-                expos.forEach(expo => {
-                    exposList.innerHTML += `<div>${expo.title} - ${expo.location}</div>`;
+            fetchData('expos')
+                .then(expos => {
+                    const exposList = document.getElementById('exposList');
+                    exposList.innerHTML = '';
+                    expos.forEach(expo => {
+                        exposList.innerHTML += `<div class='p-2 border-b'>${expo.title} - ${expo.location}</div>`;
+                    });
                 });
-            });
         }
 
         function createExpo() {
@@ -209,13 +124,109 @@
                 moment: document.getElementById('expoMoment').value,
                 cohort: document.getElementById('expoCohort').value,
             };
-            fetchData('/expos', 'POST', expo).then(() => {
-                alert("Expo Created!");
-                loadExpos();
-            });
+            fetchData('expos', 'POST', expo)
+                .then(() => {
+                    alert("Expo Created!");
+                    loadExpos();
+                });
         }
 
-        // Additional functions for students, projects, and verification go here...
+        function loadStudents() {
+            fetchData('students')
+                .then(students => {
+                    const studentsList = document.getElementById('studentsList');
+                    studentsList.innerHTML = '';
+                    students.forEach(student => {
+                        studentsList.innerHTML += `<div class='p-2 border-b'>${student.fullName} - ${student.email}</div>`;
+                    });
+                });
+        }
+
+        function createStudent() {
+            const student = {
+                fullName: document.getElementById('studentFullName').value,
+                email: document.getElementById('studentEmail').value,
+                cohort: document.getElementById('studentCohort').value,
+                duoNumber: document.getElementById('studentDuoNumber').value,
+            };
+            fetchData('students', 'POST', student)
+                .then(() => {
+                    alert("Student Created!");
+                    loadStudents();
+                });
+        }
+
+        function loadProjects() {
+            fetchData('projects')
+                .then(projects => {
+                    const projectsList = document.getElementById('projectsList');
+                    projectsList.innerHTML = '';
+                    projects.forEach(project => {
+                        projectsList.innerHTML += `<div class='p-2 border-b'>${project.title} - ${project.subscription}</div>`;
+                    });
+                });
+        }
+
+        function createProject() {
+            const project = {
+                title: document.getElementById('projectTitle').value,
+                subscription: document.getElementById('projectSubscription').value,
+                imageURL: document.getElementById('projectImageURL').value,
+                expoId: document.getElementById('projectExpoId').value,
+            };
+            fetchData('projects', 'POST', project)
+                .then(() => {
+                    alert("Project Created!");
+                    loadProjects();
+                });
+        }
+
+        function loadStudentProjects() {
+            fetchData('studentProjects')
+                .then(studentProjects => {
+                    const studentProjectsList = document.getElementById('studentProjectsList');
+                    studentProjectsList.innerHTML = '';
+                    studentProjects.forEach(sp => {
+                        studentProjectsList.innerHTML += `<div class='p-2 border-b'>Student ID: ${sp.studentId} - Project ID: ${sp.projectId}</div>`;
+                    });
+                });
+        }
+
+        function assignStudentToProject() {
+            const assignment = {
+                studentId: document.getElementById('studentId').value,
+                projectId: document.getElementById('projectId').value,
+            };
+            fetchData('studentProjects', 'POST', assignment)
+                .then(() => {
+                    alert("Student Assigned to Project!");
+                    loadStudentProjects();
+                });
+        }
+
+        function generateCode() {
+            const email = document.getElementById('verifyEmail').value;
+            fetchData('generateCode', 'POST', { email })
+                .then(() => {
+                    alert("Code Generated!");
+                });
+        }
+
+        function verifyCode() {
+            const email = document.getElementById('verifyEmail').value;
+            const code = document.getElementById('verificationCode').value;
+            fetchData('verifyCode', 'POST', { email, code })
+                .then(response => {
+                    if (response.success) {
+                        alert("Code Verified!");
+                    } else {
+                        alert("Invalid Code!");
+                    }
+                });
+        }
+
+        // Show the first tab by default
+        showTab('exposSection');
     </script>
 </body>
 </html>
